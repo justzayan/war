@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAR Season Countdown</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80vh;
+            padding: 0 50px;
+            animation: splitAnimation 2s ease-out;
+        }
+
+        .left-section,
+        .right-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            width: 150px;
+            margin-bottom: 20px;
+            filter: grayscale(100%);
+            opacity: 0;
+            animation: fadeInImage 1s ease-in-out forwards;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #countdown {
+            font-size: 4em;
+            font-weight: bold;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px white;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        .right-section {
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.6), rgba(255, 215, 0, 0.7));
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: fadeInWinner 2s ease-in-out;
+            text-align: center;
+        }
+
+        .winner {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px black;
+            margin-bottom: 20px;
+            animation: slideIn 2s ease-in-out;
+        }
+
+        .winner-logo {
+            width: 200px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInLogo 1.5s ease-in-out forwards;
+            filter: drop-shadow(0px 0px 10px rgba(255, 215, 0, 0.8));
+        }
+
+        .footer {
+            text-align: center;
+            background-color: #222;
+            color: white;
+            padding: 15px;
+            font-size: 1.1em;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .footer a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @keyframes fadeInImage {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes splitAnimation {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInLogo {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInWinner {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-section">
+            <a href="https://discord.gg/xw9HwWeytx" target="_blank">
+                <img src="https://images-ext-1.discordapp.net/external/qU_Ae6B0teNF7k83rusUYvUiH9eZvY5iL2ZfpYEk7n4/%3Fsize%3D1024/https/cdn.discordapp.com/icons/1309173138256297996/17b2ea3514ac54a0df24341988e266ce.png?format=webp&quality=lossless&width=204&height=204"
+                    alt="WAR Logo">
+            </a>
+            <h1>Coming Soon: WAR Season</h1>
+            <div id="countdown"></div>
+        </div>
+        <div class="right-section">
+            <div class="winner">Current Winner: Saste Nukers</div>
+            <img class="winner-logo"
+                src="https://media.discordapp.net/attachments/1309803672426905692/1314174326068744242/lv_0_20240824163225_exported_0.png?ex=67b26477&is=67b112f7&hm=4d3a7f95e6577d43eb1e7f54d12fee2bd3a62002429b31379dee0fa7a94a8216&=&format=webp&quality=lossless&width=240&height=240"
+                alt="Saste Nukers Logo">
+        </div>
+    </div>
+
+    <div class="footer">
+        This website is managed by the <a href="https://discord.gg/xw9HwWeytx" target="_blank"> WAR Official Server </a>
+        in cooperation with <a href="https://discord.gg/CaCzfyVthy" target="_blank">Blitz Soccer Official Server</a>.
+    </div>
+
+    <script>
+        function startCountdown(targetDate) {
+            function updateCountdown() {
+                let now = new Date().getTime();
+                let distance = targetDate - now;
+
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (distance > 0) {
+                    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                } else {
+                    document.getElementById("countdown").innerHTML = "WAR Season has begun!";
+                }
+            }
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+
+        let targetDate = new Date("March 19, 2025 15:30:00 UTC").getTime(); // 9 PM IST converted to UTC
+        startCountdown(targetDate);
+    </script>
+</body>
+
+</html>
