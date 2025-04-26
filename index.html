@@ -2,214 +2,510 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAR Season Countdown</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blitz Soccer Confederation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+    }
 
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80vh;
-            padding: 0 50px;
-            animation: splitAnimation 2s ease-out;
-        }
+    header {
+      display: flex;
+      flex-direction: column;
+      /* Make header stack vertically */
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #111;
+      position: relative;
+    }
 
-        .left-section,
-        .right-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      /* Space between logo and title */
+    }
 
-        img {
-            width: 150px;
-            margin-bottom: 20px;
-            filter: grayscale(100%);
-            opacity: 0;
-            animation: fadeInImage 1s ease-in-out forwards;
-        }
+    header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: fadeIn 2s ease-in-out;
-        }
+    h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
 
-        #countdown {
-            font-size: 4em;
-            font-weight: bold;
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px white;
-            animation: pulse 1.5s infinite alternate;
-        }
+    h4 {
+      margin-top: 10px;
+      /* Space between title and update text */
+      font-weight: 2px solidwhite;
+      color: #ccc;
+      /* Softer color for update */
+    }
 
-        .right-section {
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.6), rgba(255, 215, 0, 0.7));
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            animation: fadeInWinner 2s ease-in-out;
-            text-align: center;
-        }
 
-        .winner {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #FFD700;
-            text-shadow: 2px 2px 5px black;
-            margin-bottom: 20px;
-            animation: slideIn 2s ease-in-out;
-        }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
 
-        .winner-logo {
-            width: 200px;
-            margin-top: 20px;
-            opacity: 0;
-            animation: fadeInLogo 1.5s ease-in-out forwards;
-            filter: drop-shadow(0px 0px 10px rgba(255, 215, 0, 0.8));
-        }
+    .buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      box-shadow: 0 0 10px #fff;
+    }
 
-        .footer {
-            text-align: center;
-            background-color: #222;
-            color: white;
-            padding: 15px;
-            font-size: 1.1em;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
+    .buttons button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #fff;
+    }
 
-        .footer a {
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    .table-section {
+      display: none;
+      padding: 20px;
+      overflow-x: auto;
+    }
 
-        @keyframes fadeInImage {
-            from {
-                opacity: 0;
-            }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-            to {
-                opacity: 1;
-            }
-        }
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-        @keyframes splitAnimation {
-            from {
-                transform: translateX(-100%);
-            }
+    th {
+      background: rgba(0, 0, 0, 0.3);
+    }
 
-            to {
-                transform: translateX(0);
-            }
-        }
+    .team-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-            }
+    .team-logo {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
-            to {
-                transform: scale(1.1);
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-            }
-
-            to {
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInLogo {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInWinner {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-    </style>
+    .active {
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="left-section">
-            <a href="https://discord.gg/xw9HwWeytx" target="_blank">
-                <img src="https://images-ext-1.discordapp.net/external/qU_Ae6B0teNF7k83rusUYvUiH9eZvY5iL2ZfpYEk7n4/%3Fsize%3D1024/https/cdn.discordapp.com/icons/1309173138256297996/17b2ea3514ac54a0df24341988e266ce.png?format=webp&quality=lossless&width=204&height=204"
-                    alt="WAR Logo">
-            </a>
-            <h1>Coming Soon: WAR Season 2</h1>
-            <div id="countdown"></div>
-        </div>
-        <div class="right-section">
-            <div class="winner">Current Winner: Saste Nukers</div>
-            <img class="winner-logo"
-                src="https://media.discordapp.net/attachments/1309803672426905692/1314174326068744242/lv_0_20240824163225_exported_0.png?ex=67b3b5f7&is=67b26477&hm=113a2a788200fc3507c3649df531e9037c71a998a7bec073a20d1e7061a71fca&=&format=webp&quality=lossless&width=597&height=597"
-                alt="Saste Nukers Logo">
-        </div>
+  <header>
+    <div class="header-content">
+      <img
+        src="https://images-ext-1.discordapp.net/external/21o_0UZoKsOsPNzp5xddRvljTtd790zQuAHo8MQN45M/%3Fsize%3D1024/https/cdn.discordapp.com/icons/1362716935912951818/7d013741eb879778d59320a5af9dd07e.png?format=webp&quality=lossless&width=875&height=875"
+        alt="Blitz Logo">
+      <h1>Blitz Soccer Confederation - Team Rankings</h1>
     </div>
+    <h4>Updated on 26th April 2025</h4>
+  </header>
 
-    <div class="footer">
-        This website is managed by the <a href="https://discord.gg/xw9HwWeytx" target="_blank"> WAR Official Server </a>
-        in cooperation with <a href="https://discord.gg/CaCzfyVthy" target="_blank">Blitz Soccer Official Server</a>.
-    </div>
 
-    <script>
-        function startCountdown(targetDate) {
-            function updateCountdown() {
-                let now = new Date().getTime();
-                let distance = targetDate - now;
 
-                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  <div class="buttons">
+    <button style="background: linear-gradient(45deg, #FFD700, #FFA500);" onclick="showSection('s-tier')">S
+      Tier</button>
+    <button style="background: linear-gradient(45deg, #00BFFF, #1E90FF);" onclick="showSection('a-tier')">A
+      Tier</button>
+    <button style="background: linear-gradient(45deg, #32CD32, #7CFC00);" onclick="showSection('b-tier')">B
+      Tier</button>
+    <button style="background: linear-gradient(45deg, #FF69B4, #FF1493);" onclick="showSection('c-tier')">C
+      Tier</button>
+    <button style="background: linear-gradient(45deg, #D3D3D3, #A9A9A9);" onclick="showSection('full-table')">Full
+      Table</button>
+  </div>
 
-                if (distance > 0) {
-                    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-                } else {
-                    document.getElementById("countdown").innerHTML = "WAR Season has begun!";
-                }
-            }
+  <div id="s-tier" class="table-section">
+    <h2>S Tier (Pos 1-5)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>BSEL S1</th>
+          <th>BSEL S2</th>
+          <th>WAR S1</th>
+          <th>WAR S2</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677452294226085/724c96ca8a4dff9f25faad2b34e23176.webp?ex=680e2dbd&is=680cdc3d&hm=57e0d5a70a2aeb69456d000143146e0806dcd03b79c95e93ea9a6024b3c922dc&=&format=webp">Win
+            Ya Lun</td>
+          <td>40</td>
+          <td>0</td>
+          <td>25</td>
+          <td>50</td>
+          <td>115</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677453481082880/Screenshot_20241210-134326.webp?ex=680e2dbd&is=680cdc3d&hm=3bc66bc7078a11e0bbf3042ffc0b770ad5cf26bdaa72d45b6a8cd0bd9fe70308&=&format=webp&width=355&height=771">Baharselona
+          </td>
+          <td>26.67</td>
+          <td>40</td>
+          <td>25</td>
+          <td>16.67</td>
+          <td>108.34</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677450058530908/Picsart_25-04-19_18-24-43-483.jpg?ex=680e2dbd&is=680cdc3d&hm=ba991861cac5440224d87ded73ce00cdc60efbe5651391a856fc3a563b120574&=&format=webp&width=771&height=771">Olympus
+            FC</td>
+          <td>33.33</td>
+          <td>26.67</td>
+          <td>41.67</td>
+          <td>0</td>
+          <td>101.67</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1363074471191249016/1363075498581823531/file_00000000dff851f787776e6e1c0944a8_conversation_id67f0aefd-1d1c-8006-b5c1-4488ca117ebemessage_ida11bdab0-f24e-47fc-b15f-df2a7c5703ab.webp?ex=680df0fb&is=680c9f7b&hm=fe0f291bc4cfd2bc78e56ec9d9d8cfae15a7e274d832d039d96cb1d5cc3c7e30&=&format=webp&width=875&height=875">Garuda
+            FC</td>
+          <td>0</td>
+          <td>33.33</td>
+          <td>33.33</td>
+          <td>33.33</td>
+          <td>99.99</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365678586450677821/lv_0_20240824163225_exported_0.png?ex=680e2ecc&is=680cdd4c&hm=aa55f6c8035d635bed14a30da4416634c3c1e08cff657edbd8f6662bd7586c12&=&format=webp&quality=lossless&width=875&height=875">Saste
+            Nukers</td>
+          <td>0</td>
+          <td>13.33</td>
+          <td>50</td>
+          <td>16.67</td>
+          <td>80</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-        }
+  <div id="a-tier" class="table-section">
+    <h2>A Tier (Pos 6-10)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>BSEL S1</th>
+          <th>BSEL S2</th>
+          <th>WAR S1</th>
+          <th>WAR S2</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>6</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677450289479751/images.jpg?ex=680e2dbd&is=680cdc3d&hm=3dd9d37c0640cc2552cd192b95715e7e0edad6d68acea66325afd091dc2432fb&=&format=webp">Stevie
+            Slippers</td>
+          <td>0</td>
+          <td>0</td>
+          <td>25</td>
+          <td>41.67</td>
+          <td>66.67</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677208785522830/Picsart_25-02-28_21-30-12-929.jpg?ex=680e2d83&is=680cdc03&hm=c9ae335b8a776425c3c15be5cc3351901f9ad26402bad92b6170391f8d1bf4c3&=&format=webp&width=771&height=771">Prestige
+            Tridents</td>
+          <td>0</td>
+          <td>13.33</td>
+          <td>33.33</td>
+          <td>16.66</td>
+          <td>63.33</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677451119951932/sample_0-1.png?ex=680e2dbd&is=680cdc3d&hm=98fcd93406a17508c53e1cfa47300b53de14f2c3da7d03761e6e2705d96721b6&=&format=webp&quality=lossless&width=771&height=771">Pro
+            Challengers</td>
+          <td>0</td>
+          <td>0</td>
+          <td>16.67</td>
+          <td>33.33</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677208407900250/Picsart_25-04-02_11-39-51-481-1.jpg?ex=680e2d83&is=680cdc03&hm=df51b051af7e83a26ca04b3976e0ac86048c746ec89ab68a3f5ae42f50555043&=&format=webp&width=771&height=771">Valhalla
+            Tridents</td>
+          <td>0</td>
+          <td>6.67</td>
+          <td>25</td>
+          <td>16.67</td>
+          <td>48.34</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677211297910815/images_9.jpg?ex=680e2d84&is=680cdc04&hm=412f100c57b3be186dc62f7ccfa0437aec346ea3510a38388f48542bef37159b&=&format=webp">Chill
+            Guys</td>
+          <td>0</td>
+          <td>20</td>
+          <td>0</td>
+          <td>25</td>
+          <td>45</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-        let targetDate = new Date("March 17, 2025 15:30:00 UTC").getTime(); // 9 PM IST converted to UTC
-        startCountdown(targetDate);
-    </script>
+  <div id="b-tier" class="table-section">
+    <h2>B Tier (Pos 11-15)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>BSEL S1</th>
+          <th>BSEL S2</th>
+          <th>WAR S1</th>
+          <th>WAR S2</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>11</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365678016688160788/salta_united_logo.webp?ex=680e2e44&is=680cdcc4&hm=c6a486c202da0aa39187ea7d373ae9abe88abd891df1b43f79ded9cb32c55a60&=&format=webp">Salta
+            United</td>
+          <td>0</td>
+          <td>20</td>
+          <td>0</td>
+          <td>25</td>
+          <td>45</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677210878345257/image1_0.jpg?ex=680e2d84&is=680cdc04&hm=91293b52e00ddae4badd06f248b87f641f47a15ef43962af1ed50a53a44ed84c&=&format=webp&width=771&height=771">Silent
+            Oblivion</td>
+          <td>0</td>
+          <td>20</td>
+          <td>0</td>
+          <td>16.67</td>
+          <td>36.67</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677207346876436/1745477031656.png?ex=680e2d83&is=680cdc03&hm=00578c3366fe2da1455c802d582e865d1193fdcd4329dd4c7d8c44dc3bf2e5e5&=&format=webp&quality=lossless&width=847&height=771">Blues
+            Tridents</td>
+          <td>0</td>
+          <td>20</td>
+          <td>0</td>
+          <td>16.67</td>
+          <td>36.67</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1363072842052407467/1363073308735832215/Untitled4_202411101329532.png?ex=680deef1&is=680c9d71&hm=157b0b5f57c9914100bbefc87cd82d89b98df4404cf9dff123e5d0701a5ab5ef&=&format=webp&quality=lossless">Real
+            Exodus</td>
+          <td>0</td>
+          <td>26.67</td>
+          <td>0</td>
+          <td>8.33</td>
+          <td>35</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677210375159889/raw-1.png?ex=680e2d84&is=680cdc04&hm=01dcf3b199d57eae18aa1a98cea404f4202709b4bfd458fe5766f2478c10b417&=&format=webp&quality=lossless&width=771&height=771">Koala
+            Undefined</td>
+          <td>0</td>
+          <td>13.33</td>
+          <td>8.33</td>
+          <td>8.33</td>
+          <td>29.99</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="c-tier" class="table-section">
+    <h2>C Tier (Pos 16-21)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>BSEL S1</th>
+          <th>BSEL S2</th>
+          <th>WAR S1</th>
+          <th>WAR S2</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>16</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677209678909561/IMG_20250420_201720.png?ex=680e2d83&is=680cdc03&hm=c980992c2125b075cbef4f18aac2e0887a9a9aad051f322103b229ce8982f5aa&=&format=webp&quality=lossless">Hypercraft
+            CF</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>25</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677453070045276/Picsart_25-02-22_10-22-48-321.png?ex=680e2dbd&is=680cdc3d&hm=ae2b87d0994c868d6a1890a69361ee96e0f532834c05278b9e3ebcd933880eef&=&format=webp&quality=lossless&width=771&height=771">Sovereign
+            Tridents</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>25</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365678016939692083/This_Facebook_Page_Is_All_About_Animal_Images_That_Need_To_Be_Seen_50_Pics_1.jpg?ex=680e2e44&is=680cdcc4&hm=776833acacc8864f85753bc5ed4d9fb7b907381e32dfef4ab95c450e40658a1b&=&format=webp">Chuha
+            Gang</td>
+          <td>0</td>
+          <td>13.33</td>
+          <td>0</td>
+          <td>0</td>
+          <td>13.33</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677208009572353/Screenshot_20250422_232158.jpg?ex=680e2d83&is=680cdc03&hm=402d83bf83728995a024d6192f964f56970cba44d1e2f08c163687b1cd50f27e&=&format=webp&width=961&height=771">Disgusted
+            Clowns</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677209414533170/Screenshot_20250422-013142_Discord.jpg?ex=680e2d83&is=680cdc03&hm=d2f18f9f34deff2bc9f10825f941dab03b4a461a7e43323cf9bde85f15a7604e&=&format=webp">Final
+            Strike</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td class="team-name"><img class="team-logo"
+              src="https://media.discordapp.net/attachments/1362730093377622036/1365677209150296144/Picsart_25-04-01_15-36-39-631.jpg?ex=680e2d83&is=680cdc03&hm=373f94656a3d4004f04cfc4a5f30d3d0c86f8f38aec284b529aa880f78ed1bc3&=&format=webp&width=771&height=771">Galahad
+            Tridents</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="full-table" class="table-section active">
+    <h2>Full Rankings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>BSEL S1</th>
+          <th>BSEL S2</th>
+          <th>WAR S1</th>
+          <th>WAR S2</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="full-table-body">
+        <!-- Rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.table-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // Fill and sort the full table
+    window.onload = function () {
+      const allTables = document.querySelectorAll('tbody');
+      const fullTableBody = document.getElementById('full-table-body');
+      const rows = [];
+
+      // Collect all rows from tier tables
+      document.querySelectorAll('.table-section:not(#full-table) table tbody tr').forEach(tr => {
+        rows.push(tr.cloneNode(true));
+      });
+
+      // Sort rows by rank (first column)
+      rows.sort((a, b) => {
+        const rankA = parseInt(a.children[0].textContent);
+        const rankB = parseInt(b.children[0].textContent);
+        return rankA - rankB;
+      });
+
+      // Add sorted rows to full table
+      rows.forEach(row => fullTableBody.appendChild(row));
+
+      // Show full table by default
+      showSection('full-table');
+    };
+  </script>
+
 </body>
 
 </html>
