@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blitz Soccer Confederation - Standings</title>
+  <style>
+    :root {
+      --cl-blue: #0055A4;
+      --cl-dark-blue: #003366;
+      --el-yellow: #FFCC00;
+      --el-orange: #FF6600;
+      --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      position: relative;
+      backdrop-filter: blur(5px);
+    }
+
+    header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-left: 20px;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .leagues-container {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+      align-items: stretch;
+      justify-content: center;
+      /* <-- Add this line */
+    }
+
+    .league {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 0;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      display: flex;
+      /* Make league a flex container */
+      flex-direction: column;
+      /* Stack children vertically */
+    }
+
+    .league-header {
+      padding: 15px;
+      font-size: 1.3em;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .champions-league {
+      background: linear-gradient(90deg, var(--cl-dark-blue), var(--cl-blue));
+      box-shadow: 0 3px 15px rgba(0, 85, 164, 0.5);
+    }
+
+    .europa-league {
+      background: linear-gradient(90deg, var(--el-orange), var(--el-yellow));
+      box-shadow: 0 3px 15px rgba(255, 102, 0, 0.5);
+    }
+
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      flex-grow: 1;
+      /* Allow the table to grow and fill the available space */
+    }
+
+    .standings-table th {
+      padding: 15px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      font-weight: 500;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .standings-table td {
+      padding: 12px 15px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .team-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .team-logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .form-indicator {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+    }
+
+    .form-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .win {
+      background: #2ecc71;
+    }
+
+    .draw {
+      background: #f39c12;
+    }
+
+    .loss {
+      background: #e74c3c;
+    }
+
+    .not-played {
+      background: grey;
+      opacity: 0.5;
+    }
+
+
+    .promotion {
+      background: rgba(46, 204, 113, 0.1);
+      border-left: 3px solid #2ecc71;
+    }
+
+    .relegation {
+      background: rgba(231, 76, 60, 0.1);
+      border-left: 3px solid #e74c3c;
+    }
+
+    @media (max-width: 768px)
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Blitz Soccer Confederation</h1>
+    <a href="https://bsc-council.vercel.app/">
+      <img
+        src="https://images-ext-1.discordapp.net/external/21o_0UZoKsOsPNzp5xddRvljTtd790zQuAHo8MQN45M/%3Fsize%3D1024/https/cdn.discordapp.com/icons/1362716935912951818/7d013741eb879778d59320a5af9dd07e.png?format=webp&quality=lossless&width=875&height=875"
+        alt="Blitz Logo">
+    </a>
+
+  </header>
+
+  <div class="container">
+    <div class="leagues-container">
+      <div class="league">
+        <div class="league-header champions-league">Champions League</div>
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Team</th>
+              <th>P</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>GF</th>
+              <th>GA</th>
+              <th>GD</th>
+              <th>Pts</th>
+              <th>Form</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Saste Nukers
+                </div>
+              </td>
+              <td>10</td>
+              <td>8</td>
+              <td>1</td>
+              <td>1</td>
+              <td>24</td>
+              <td>5</td>
+              <td>+19</td>
+              <td>25</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot not-played"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Chill Guys
+                </div>
+              </td>
+              <td>10</td>
+              <td>7</td>
+              <td>2</td>
+              <td>1</td>
+              <td>20</td>
+              <td>8</td>
+              <td>+12</td>
+              <td>23</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Olympus FC
+                </div>
+              </td>
+              <td>10</td>
+              <td>6</td>
+              <td>3</td>
+              <td>1</td>
+              <td>18</td>
+              <td>7</td>
+              <td>+11</td>
+              <td>21</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Silent Oblivion
+                </div>
+              </td>
+              <td>10</td>
+              <td>6</td>
+              <td>2</td>
+              <td>2</td>
+              <td>16</td>
+              <td>9</td>
+              <td>+7</td>
+              <td>20</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Real Exodus
+                </div>
+              </td>
+              <td>10</td>
+              <td>5</td>
+              <td>3</td>
+              <td>2</td>
+              <td>15</td>
+              <td>10</td>
+              <td>+5</td>
+              <td>18</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Baharselona
+                </div>
+              </td>
+              <td>10</td>
+              <td>5</td>
+              <td>2</td>
+              <td>3</td>
+              <td>14</td>
+              <td>12</td>
+              <td>+2</td>
+              <td>17</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Pro Challengers
+                </div>
+              </td>
+              <td>10</td>
+              <td>4</td>
+              <td>3</td>
+              <td>3</td>
+              <td>12</td>
+              <td>11</td>
+              <td>+1</td>
+              <td>15</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Sovereign Tridents
+                </div>
+              </td>
+              <td>10</td>
+              <td>3</td>
+              <td>4</td>
+              <td>3</td>
+              <td>11</td>
+              <td>12</td>
+              <td>-1</td>
+              <td>13</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Garuda FC
+                </div>
+              </td>
+              <td>10</td>
+              <td>2</td>
+              <td>4</td>
+              <td>4</td>
+              <td>9</td>
+              <td>13</td>
+              <td>-4</td>
+              <td>10</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Stevie Slippers
+                </div>
+              </td>
+              <td>10</td>
+              <td>1</td>
+              <td>2</td>
+              <td>7</td>
+              <td>6</td>
+              <td>18</td>
+              <td>-12</td>
+              <td>5</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="league">
+        <div class="league-header europa-league">Europa League</div>
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Team</th>
+              <th>P</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>GF</th>
+              <th>GA</th>
+              <th>GD</th>
+              <th>Pts</th>
+              <th>Form</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Koala Undefined
+                </div>
+              </td>
+              <td>10</td>
+              <td>7</td>
+              <td>2</td>
+              <td>1</td>
+              <td>19</td>
+              <td>6</td>
+              <td>+13</td>
+              <td>23</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Valhalla Tridents
+                </div>
+              </td>
+              <td>10</td>
+              <td>6</td>
+              <td>3</td>
+              <td>1</td>
+              <td>17</td>
+              <td>7</td>
+              <td>+10</td>
+              <td>21</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Salta United
+                </div>
+              </td>
+              <td>10</td>
+              <td>6</td>
+              <td>2</td>
+              <td>2</td>
+              <td>16</td>
+              <td>9</td>
+              <td>+7</td>
+              <td>20</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Hypercraft FC
+                </div>
+              </td>
+              <td>10</td>
+              <td>5</td>
+              <td>3</td>
+              <td>2</td>
+              <td>15</td>
+              <td>10</td>
+              <td>+5</td>
+              <td>18</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Leviathan Tridents
+                </div>
+              </td>
+              <td>10</td>
+              <td>5</td>
+              <td>2</td>
+              <td>3</td>
+              <td>14</td>
+              <td>12</td>
+              <td>+2</td>
+              <td>17</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Prestige Tridents
+                </div>
+              </td>
+              <td>10</td>
+              <td>4</td>
+              <td>3</td>
+              <td>3</td>
+              <td>12</td>
+              <td>11</td>
+              <td>+1</td>
+              <td>15</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Galahad Tridents
+                </div>
+              </td>
+              <td>10</td>
+              <td>3</td>
+              <td>4</td>
+              <td>3</td>
+              <td>11</td>
+              <td>12</td>
+              <td>-1</td>
+              <td>13</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                  <div class="form-dot draw"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Final Strike
+                </div>
+              </td>
+              <td>10</td>
+              <td>2</td>
+              <td>4</td>
+              <td>4</td>
+              <td>9</td>
+              <td>13</td>
+              <td>-4</td>
+              <td>10</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Chuha Gang
+                </div>
+              </td>
+              <td>10</td>
+              <td>1</td>
+              <td>2</td>
+              <td>7</td>
+              <td>6</td>
+              <td>18</td>
+              <td>-12</td>
+              <td>5</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot win"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>
+                <div class="team-cell">
+                  <img src="team-logo.png" class="team-logo" alt="">
+                  Disguised Clowns
+                </div>
+              </td>
+              <td>10</td>
+              <td>0</td>
+              <td>1</td>
+              <td>9</td>
+              <td>3</td>
+              <td>22</td>
+              <td>-19</td>
+              <td>1</td>
+              <td>
+                <div class="form-indicator">
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot draw"></div>
+                  <div class="form-dot loss"></div>
+                  <div class="form-dot loss"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
