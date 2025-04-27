@@ -177,7 +177,62 @@
       border-left: 3px solid #e74c3c;
     }
 
-    @media (max-width: 768px)
+  /* Responsive adjustments */
+    @media (min-width: 768px) {
+      .leagues-container {
+        flex-direction: row;
+      }
+      
+      header {
+        flex-wrap: nowrap;
+      }
+      
+      h1 {
+        font-size: 2.5em;
+      }
+      
+      header img {
+        width: 80px;
+        height: 80px;
+        margin-left: 20px;
+      }
+      
+      .standings-table {
+        min-width: auto;
+      }
+      
+      .standings-table th, 
+      .standings-table td {
+        padding: 12px 15px;
+        font-size: 1em;
+      }
+      
+      .team-logo {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .form-dot {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5em;
+      }
+      
+      .team-cell {
+        min-width: 100px;
+      }
+      
+      .standings-table th, 
+      .standings-table td {
+        padding: 8px 5px;
+        font-size: 0.8em;
+      }
+    }
   </style>
 </head>
 
