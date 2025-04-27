@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BSC Council - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0055A4;
+      --secondary: #FF6600;
+      --bg-dark: #0f2027;
+      --bg-light: #2c5364;
+      --text-light: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+      color: var(--text-light);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--secondary);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: url('your-hero-image.jpg') no-repeat center/cover;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .cta-button {
+      margin-top: 30px;
+      display: inline-block;
+      background: var(--secondary);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.1em;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background: #ff8533;
+    }
+
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 60px 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      width: 250px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .card a:hover {
+      background: #0066cc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      background: rgba(0, 0, 0, 0.4);
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img src="bsc-logo.png" alt="BSC Council Logo">
+    <nav>
+      <a href="#">Home</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="tournaments.html">Tournaments</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to Blitz Soccer Confederation</h1>
+    <p>Official platform for rankings, tournaments, and news about the BSC universe.</p>
+    <a href="rankings.html" class="cta-button">View Team Rankings</a>
+  </section>
+
+  <section class="quick-links">
+    <div class="card">
+      <h2>Team Rankings</h2>
+      <p>Check out who's dominating the standings right now!</p>
+      <a href="rankings.html">See Rankings</a>
+    </div>
+
+    <div class="card">
+      <h2>Ongoing Tournament</h2>
+      <p>Follow the action and stay updated with the latest matches!</p>
+      <a href="tournaments.html">View Tournament</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Blitz Soccer Confederation Council. All rights reserved.
+  </footer>
+
+</body>
+
+</html>
